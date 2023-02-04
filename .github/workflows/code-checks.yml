@@ -1,0 +1,27 @@
+name: Code Checks
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  pre-commit:
+    name: Run pre-commit
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # When rustup is updated, it tries to replace its binary, which on Windows is somehow locked.
+      # This can result in the CI failure, see: https://github.com/rust-lang/rustup/issues/3029
+      - name: Install Rust Toolchain
+        run: |
+          rustup set auto-self-update disable
+          rustup toolchain install stable --profile minimal
+          rustup component add rustfmt
+
+      - uses: pre-commit-ci/lite-action@v1.0.0
