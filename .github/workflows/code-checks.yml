@@ -1,0 +1,57 @@
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  # cargo-check:
+  #   name: Check Rust Code
+
+  #   strategy:
+  #     fail-fast: true
+  #     matrix:
+  #       rust-version: [stable, beta]
+  #       os: [ubuntu-latest]
+
+  #   runs-on: ${{ matrix.os }}
+
+  #   env:
+  #     CARGO_TERM_COLOR: always
+
+  #   steps:
+  #     - name: Checkout Code
+  #       uses: actions/checkout@v3
+
+  #     # When rustup is updated, it tries to replace its binary, which on Windows is somehow locked.
+  #     # This can result in the CI failure, see: https://github.com/rust-lang/rustup/issues/3029
+  #     - name: Install Rust Toolchain
+  #       run: |
+  #         rustup set auto-self-update disable
+  #         rustup toolchain install ${{ matrix.rust-version }} --profile minimal
+
+  #     - name: Cache Rust artefacts
+  #       uses: Swatinem/rust-cache@v2
+
+  #     - name: Check build
+  #       run: |
+  #         cargo check --all-features
+
+  pre-commit:
+    name: Run pre-commit
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # When rustup is updated, it tries to replace its binary, which on Windows is somehow locked.
+      # This can result in the CI failure, see: https://github.com/rust-lang/rustup/issues/3029
+      - name: Install Rust Toolchain
+        run: |
+          rustup set auto-self-update disable
+          rustup toolchain install stable --profile minimal
+          rustup component add rustfmt
+
+      - uses: pre-commit-ci/lite-action@v1.0.0
