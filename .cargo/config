@@ -1,2 +1,7 @@
 [build]
-rustdocflags = ["--html-in-header", ".cargo/katex.html"]
+rustdocflags = [
+  "--html-in-header",     ".cargo/katex-header.html",
+  "--html-after-content", ".cargo/katex-after.html",
+  "--html-in-header",     ".cargo/mermaid-header.html",
+  "--html-after-content", ".cargo/mermaid-after.html",
+]
