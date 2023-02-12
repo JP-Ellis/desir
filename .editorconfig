@@ -19,3 +19,7 @@ indent_style = space
 [*.md]
 indent_size = 4
 indent_style = space
+
+[*.rs]
+indent_size = 4
+indent_style = space
