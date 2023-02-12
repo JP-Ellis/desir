@@ -9,6 +9,7 @@ repos:
       - id: check-case-conflict
       - id: check-executables-have-shebangs
       - id: check-shebang-scripts-are-executable
+        exclude: \.rs$
       - id: check-symlinks
       - id: check-toml
       - id: check-yaml
@@ -35,4 +36,4 @@ repos:
         name: rust formatting
         language: system
         types: [rust]
-        entry: rustfmt --check
+        entry: rustfmt --emit files --files-with-diff
